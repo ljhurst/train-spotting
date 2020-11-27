@@ -1,34 +1,9 @@
 (function () {
-    var config = {
+    const config = {
         type: 'line',
         data: {
             labels: [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
-            datasets: [
-//                {
-//                    backgroundColor: 'rgb(54, 162, 235)',
-//                    borderColor: 'rgb(54, 162, 235)',
-//                    data: [],
-//                    fill: false,
-//                    label: 'Amy',
-//                    lineTension: 0
-//                },
-//                {
-//                    backgroundColor: 'rgb(75, 192, 192)',
-//                    borderColor: 'rgb(75, 192, 192)',
-//                    data: [],
-//                    fill: false,
-//                    label: 'Katy',
-//                    lineTension: 0
-//                },
-//                {
-//                    backgroundColor: 'rgb(255, 99, 132)',
-//                    borderColor: 'rgb(255, 99, 132)',
-//                    data: [],
-//                    fill: false,
-//                    label: 'Luke',
-//                    lineTension: 0
-//                }
-            ]
+            datasets: []
         },
         options: {
             responsive: true,
@@ -59,8 +34,8 @@
         }
     };
 
-    window.onload = function() {
-        var ctx = document.getElementById('canvas').getContext('2d');
+    window.onload = function () {
+        const ctx = document.getElementById('canvas').getContext('2d');
         console.log('ctx', ctx);
         window.myLine = new Chart(ctx, config);
 
@@ -79,7 +54,7 @@
 
             addPlayer(name);
 
-            const inputs = getScoreInputs()
+            const inputs = getScoreInputs();
             const nameInputs = inputs.filter(input => input.name.split('-')[0] === name);
 
             Object.entries(score).forEach(([round, score]) => {
@@ -108,10 +83,6 @@
         return [...document.querySelectorAll('input.score-input')];
     }
 
-    function getRemovePlayerButtons() {
-        return [...document.querySelectorAll('button[id*=btn-remove-player]')];
-    }
-
     function addPlayerDataset(name) {
         const color = `
             rgb(
@@ -131,7 +102,7 @@
     }
 
     function createPlayerRowHtml(name) {
-            return `
+        return `
                 <td>${name}</td>
                 <td><input class="score-input" type="number" name="${name}-12"></td>
                 <td><input class="score-input" type="number" name="${name}-11"></td>
@@ -188,7 +159,7 @@
     document.getElementById('btn-add-player').addEventListener('click', () => {
         console.log('btn-add-player click');
 
-        inputAddPlayer = document.getElementById('input-add-player');
+        const inputAddPlayer = document.getElementById('input-add-player');
         const newPlayer = inputAddPlayer.value;
         inputAddPlayer.value = '';
 
@@ -252,11 +223,11 @@
 
     function addScoreInputEventListeners(inputs) {
         inputs.forEach(element => {
-            element.addEventListener('change', function(e) {
+            element.addEventListener('change', function (e) {
                 console.log('e', e);
                 const [name, round] = e.target.name.split('-');
                 const score = parseInt(e.target.value);
-                
+
                 let scores = getScores();
                 console.log('scores', scores);
                 scores = scores || {};
@@ -267,7 +238,7 @@
 
                 nameScore[round] = score;
 
-                saveScores({...scores, [name]: nameScore});
+                saveScores({ ...scores, [name]: nameScore });
 
                 config.data.datasets.forEach(dataset => {
                     console.log('dataset', dataset);

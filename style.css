@@ -1,0 +1,12 @@
+input.score-input {
+  width: 100px;
+}
+
+#canvas-container {
+  margin: auto;
+  width: 95%;
+}
+
+#canvas {
+  display: block;
+}

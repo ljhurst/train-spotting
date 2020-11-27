@@ -1,19 +1,21 @@
-<html>
+<!doctype html>
+
+<html lang="en">
 
 <head>
-    <title>Trains Tracking</title>
+    <meta charset="utf-8">
 
-    <style>
-        input.score-input {
-            width: 100px;
-        }
-    </style>
+    <title>Trains Tracking</title>
+    <meta name="description" content="Trains Tracking">
+    <meta name="author" content="Luke Hurst">
+
+    <link rel="stylesheet" href="style.css?v=1.0">
 </head>
 
 <body>
     <h1>Trains</h1>
 
-    <h3>Scores <button id="btn-new-game">New Game</button></h1>
+    <h3>Scores <button id="btn-new-game">New Game</button></h3>
 
     <table>
         <thead>
@@ -41,10 +43,12 @@
     <input id="input-add-player" type="text" placeholder="New player name">
     <button id="btn-add-player">Add Player</button>
 
-    <div style="margin: auto; width: 95%;">
-        <canvas id="canvas" style="display: block" height="100"></canvas>
+    <div id="canvas-container">
+        <canvas id="canvas" height="100"></canvas>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <script src="./script.js"></script>
 </body>
+
+</html>

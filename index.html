@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <title>Trains Tracking</title>
+
+    <style>
+        input.score-input {
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Trains</h1>
+
+    <h3>Scores <button id="btn-new-game">New Game</button></h1>
+
+    <table>
+        <thead>
+            <tr>
+                <td></td>
+                <td>12</td>
+                <td>11</td>
+                <td>10</td>
+                <td>9</td>
+                <td>8</td>
+                <td>7</td>
+                <td>6</td>
+                <td>5</td>
+                <td>4</td>
+                <td>3</td>
+                <td>2</td>
+                <td>1</td>
+                <td>0</td>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <input id="input-add-player" type="text" placeholder="New player name">
+    <button id="btn-add-player">Add Player</button>
+
+    <div style="margin: auto; width: 95%;">
+        <canvas id="canvas" style="display: block" height="100"></canvas>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="./script.js"></script>
+</body>

@@ -1,5 +1,5 @@
 input.score-input {
-  width: 100px;
+  width: 85px;
 }
 
 #canvas-container {
@@ -9,4 +9,8 @@ input.score-input {
 
 #canvas {
   display: block;
+}
+
+.btn-remove-player {
+  font-size: 12px;
 }

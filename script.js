@@ -43,9 +43,16 @@
     };
 
     function restoreInputs() {
+        const game = getGame();
+
+        if (game) {
+            inputStartingTiles = getStartingTilesInput();
+            inputStartingTiles.value = game.startingTiles;
+        }
+
         const scores = getScores();
 
-        if (!scores) {
+        if (Object.keys(scores).length === 0) {
             return;
         }
 
@@ -68,8 +75,7 @@
             config.data.datasets.forEach(dataset => {
                 if (dataset.label === name) {
                     const orderedRoundScores = Object.entries(score).sort((a, b) => parseInt(b[0]) - parseInt(a[0])).map(a => a[1]);
-                    let sum;
-                    const roundSums = orderedRoundScores.map(elem => sum = (sum || 0) + elem);
+                    const roundSums = cumSums(orderedRoundScores);
 
                     dataset.data = roundSums;
                 }
@@ -77,6 +83,10 @@
         });
 
         window.myLine.update();
+    }
+
+    function getStartingTilesInput() {
+        return document.getElementById('input-starting-tiles');
     }
 
     function getScoreInputs() {
@@ -117,25 +127,46 @@
                 <td><input class="score-input" type="number" name="${name}-2"></td>
                 <td><input class="score-input" type="number" name="${name}-1"></td>
                 <td><input class="score-input" type="number" name="${name}-0"></td>
-                <td><button id="btn-remove-player-${name}">Remove Player</button></td>
+                <td><button id="btn-remove-player-${name}" class="btn-remove-player">Remove Player</button></td>
             `;
     }
 
     function getScores() {
-        return JSON.parse(sessionStorage.getItem('scores'));
+        return JSON.parse(sessionStorage.getItem('scores')) || {};
     }
 
     function saveScores(scores) {
         sessionStorage.setItem('scores', JSON.stringify(scores));
     }
 
+    function getGame() {
+        return JSON.parse(sessionStorage.getItem('game')) || {};
+    }
+
+    function saveGame(game) {
+        sessionStorage.setItem('game', JSON.stringify(game));
+    }
+
+    function cumSums(scores) {
+        let sum;
+        return scores.map(elem => sum = (sum || 0) + elem);
+    }
+
     // Events
+
+    document.getElementById('input-starting-tiles').addEventListener('change', (e) => {
+        console.log('input-starting-tiles change');
+
+        let game = getGame();
+        game.startingTiles = e.target.value;
+
+        saveGame(game);
+    });
 
     document.getElementById('btn-new-game').addEventListener('click', () => {
         console.log('btn-new-game click');
 
         let scores = getScores();
-        scores = scores || {};
 
         Object.keys(scores).forEach(name => {
             scores[name] = {};
@@ -166,6 +197,12 @@
         addPlayer(newPlayer);
     });
 
+    document.getElementById('btn-download-results').addEventListener('click', () => {
+        console.log('btn-download-results click');
+
+        downloadResults();
+    });
+
     function addRemovePlayerButtonEventListener(button) {
         button.addEventListener('click', () => {
             console.log('btn-remove-player click');
@@ -189,7 +226,6 @@
         addPlayerDataset(name);
 
         let scores = getScores();
-        scores = scores || {};
 
         if (!scores[name]) {
             scores[name] = {};
@@ -210,7 +246,6 @@
         config.data.datasets.splice(dataSetIndex, 1);
 
         let scores = getScores();
-        scores = scores || {};
 
         if (scores[name]) {
             delete scores[name];
@@ -230,7 +265,6 @@
 
                 let scores = getScores();
                 console.log('scores', scores);
-                scores = scores || {};
 
                 let nameScore = scores[name];
                 console.log('nameScore', nameScore);
@@ -244,8 +278,7 @@
                     console.log('dataset', dataset);
                     if (dataset.label === name) {
                         const orderedRoundScores = Object.entries(nameScore).sort((a, b) => parseInt(b[0]) - parseInt(a[0])).map(a => a[1]);
-                        let sum;
-                        const roundSums = orderedRoundScores.map(elem => sum = (sum || 0) + elem);
+                        const roundSums = cumSums(orderedRoundScores);
 
                         dataset.data = roundSums;
                     }
@@ -257,4 +290,48 @@
     }
 
     addScoreInputEventListeners(getScoreInputs());
+
+    // Download Results
+
+    function downloadResults() {
+        // {
+        //   game: {
+        //      downloaded_at: timestamp,
+        //      starting_tiles: number
+        //   },
+        //   scores: [
+        //      {
+        //          player: string,
+        //          rounds: {
+        //              12: number
+        //          },
+        //          total: number
+        //      },
+        //      ...
+        //   ]
+        // }
+
+        const game = getGame();
+        const scores = getScores();
+
+        results = {
+            game: {
+                downloaded_at: Date.now(),
+                starting_tiles: parseInt(game.startingTiles)
+            },
+            scores: Object.entries(scores).map(([player, rounds]) => ({
+                player,
+                rounds,
+                total: Object.values(rounds).reduce((acc, val) => acc + val, 0)
+            }))
+        };
+
+        const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(results));
+
+        const dlAnchorElem = document.getElementById('anchor-download');
+
+        dlAnchorElem.setAttribute('href', dataStr);
+        dlAnchorElem.setAttribute('download', 'trains-results.json');
+        dlAnchorElem.click();
+    }
 })();

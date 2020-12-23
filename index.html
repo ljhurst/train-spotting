@@ -15,6 +15,12 @@
 <body>
     <h1>Trains</h1>
 
+    <h3>Game</h3>
+    <label>
+        Starting Tiles
+    </label>
+    <input id="input-starting-tiles" type="number">
+
     <h3>Scores <button id="btn-new-game">New Game</button></h3>
 
     <table>
@@ -47,8 +53,15 @@
         <canvas id="canvas" height="100"></canvas>
     </div>
 
+    <div>
+        <button id="btn-download-results">Download Results</button>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <script src="./script.js"></script>
+
+    <!-- For downloads -->
+    <a id="anchor-download" style="display:none"></a>
 </body>
 
 </html>

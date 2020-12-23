@@ -46,7 +46,7 @@
         const game = getGame();
 
         if (game) {
-            inputStartingTiles = getStartingTilesInput();
+            const inputStartingTiles = getStartingTilesInput();
             inputStartingTiles.value = game.startingTiles;
         }
 
@@ -81,6 +81,8 @@
                 }
             });
         });
+
+        setTabIndexes();
 
         window.myLine.update();
     }
@@ -129,6 +131,14 @@
                 <td><input class="score-input" type="number" name="${name}-0"></td>
                 <td><button id="btn-remove-player-${name}" class="btn-remove-player">Remove Player</button></td>
             `;
+    }
+
+    function setTabIndexes() {
+        const numPlayers = Object.keys(getScores()).length;
+
+        getScoreInputs().forEach((input, index) => {
+            input.tabIndex = (index % 13) * numPlayers + Math.floor(index / 13) + 10;
+        });
     }
 
     function getScores() {
@@ -233,6 +243,8 @@
 
         saveScores(scores);
 
+        setTabIndexes();
+
         window.myLine.update();
     }
 
@@ -252,6 +264,8 @@
         }
 
         saveScores(scores);
+
+        setTabIndexes();
 
         window.myLine.update();
     }
@@ -314,7 +328,7 @@
         const game = getGame();
         const scores = getScores();
 
-        results = {
+        const results = {
             game: {
                 downloaded_at: Date.now(),
                 starting_tiles: parseInt(game.startingTiles)

@@ -1,4 +1,15 @@
 (function () {
+    const COLORS = {
+        orange: '#ff8c00',
+        yellow: '#fdd949',
+        green: '#008000',
+        blue: '#4169e1',
+        purple: '#800080',
+        brown: '#8b4513',
+        pink: '#ff1493',
+        white: '#ffffff'
+    };
+
     const config = {
         type: 'line',
         data: {
@@ -59,12 +70,12 @@
         Object.entries(scores).forEach(([name, score]) => {
             console.log('name, score', name, score);
 
-            addPlayer(name);
+            addPlayer(name, score.color);
 
             const inputs = getScoreInputs();
             const nameInputs = inputs.filter(input => input.name.split('-')[0] === name);
 
-            Object.entries(score).forEach(([round, score]) => {
+            Object.entries(score.rounds).forEach(([round, score]) => {
                 const roundInput = nameInputs.filter(input => input.name.split('-')[1] === round)[0];
 
                 roundInput.value = score;
@@ -74,7 +85,7 @@
         Object.entries(scores).forEach(([name, score]) => {
             config.data.datasets.forEach(dataset => {
                 if (dataset.label === name) {
-                    const orderedRoundScores = Object.entries(score).sort((a, b) => parseInt(b[0]) - parseInt(a[0])).map(a => a[1]);
+                    const orderedRoundScores = Object.entries(score.rounds).sort((a, b) => parseInt(b[0]) - parseInt(a[0])).map(a => a[1]);
                     const roundSums = cumSums(orderedRoundScores);
 
                     dataset.data = roundSums;
@@ -95,14 +106,21 @@
         return [...document.querySelectorAll('input.score-input')];
     }
 
-    function addPlayerDataset(name) {
-        const color = `
-            rgb(
-                ${Math.floor(Math.random() * 256)},
-                ${Math.floor(Math.random() * 256)},
-                ${Math.floor(Math.random() * 256)}
-            )
-        `;
+    function addPlayerDataset(name, colorName) {
+        let color;
+        if (colorName) {
+            color = COLORS[colorName];
+        }
+        else {
+            color = `
+                rgb(
+                    ${Math.floor(Math.random() * 256)},
+                    ${Math.floor(Math.random() * 256)},
+                    ${Math.floor(Math.random() * 256)}
+                )
+            `;
+        }
+
         config.data.datasets.push({
             backgroundColor: color,
             borderColor: color,
@@ -113,9 +131,9 @@
         });
     }
 
-    function createPlayerRowHtml(name) {
+    function createPlayerRowHtml(name, color) {
         return `
-                <td>${name}</td>
+                <td><span>${name}</span><img src="assets/${color}-train.jpg" height="32px"></td>
                 <td><input class="score-input" type="number" name="${name}-12"></td>
                 <td><input class="score-input" type="number" name="${name}-11"></td>
                 <td><input class="score-input" type="number" name="${name}-10"></td>
@@ -179,7 +197,7 @@
         let scores = getScores();
 
         Object.keys(scores).forEach(name => {
-            scores[name] = {};
+            scores[name].rounds = {};
         });
 
         saveScores(scores);
@@ -204,7 +222,11 @@
         const newPlayer = inputAddPlayer.value;
         inputAddPlayer.value = '';
 
-        addPlayer(newPlayer);
+        const selectPlayerColor = document.getElementById('select-player-color');
+        const newPlayerColor = selectPlayerColor.value;
+        selectPlayerColor.value = '';
+
+        addPlayer(newPlayer, newPlayerColor);
     });
 
     document.getElementById('btn-download-results').addEventListener('click', () => {
@@ -224,21 +246,26 @@
         });
     }
 
-    function addPlayer(name) {
+    function addPlayer(name, color) {
+        console.log('addPlayer', name, color);
+
         const tbody = document.getElementsByTagName('tbody')[0];
         const newRow = tbody.insertRow(tbody.rows.length);
 
-        newRow.innerHTML = createPlayerRowHtml(name);
+        newRow.innerHTML = createPlayerRowHtml(name, color);
 
         addScoreInputEventListeners([...document.querySelectorAll(`input[name*=${name}]`)]);
         addRemovePlayerButtonEventListener(document.querySelector(`button#btn-remove-player-${name}`));
 
-        addPlayerDataset(name);
+        addPlayerDataset(name, color);
 
         let scores = getScores();
 
         if (!scores[name]) {
-            scores[name] = {};
+            scores[name] = {
+                color: color,
+                rounds: {}
+            };
         }
 
         saveScores(scores);
@@ -251,7 +278,7 @@
     function removePlayer(name) {
         const tbody = document.getElementsByTagName('tbody')[0];
 
-        const rowIndex = [...tbody.rows].findIndex(row => row.children[0].innerHTML === name);
+        const rowIndex = [...tbody.rows].findIndex(row => row.children[0].children[0].innerHTML === name);
         tbody.deleteRow(rowIndex);
 
         const dataSetIndex = config.data.datasets.findIndex(dataset => dataset.label === name);
@@ -280,13 +307,16 @@
                 let scores = getScores();
                 console.log('scores', scores);
 
-                let nameScore = scores[name];
+                let nameObj = scores[name];
+                nameObj = nameObj || {};
+                nameScore = nameObj.rounds || {};
                 console.log('nameScore', nameScore);
-                nameScore = nameScore || {};
 
                 nameScore[round] = score;
+                nameObj.rounds = nameScore;
+                scores[name] = nameObj;
 
-                saveScores({ ...scores, [name]: nameScore });
+                saveScores(scores);
 
                 config.data.datasets.forEach(dataset => {
                     console.log('dataset', dataset);
@@ -333,10 +363,11 @@
                 downloaded_at: Date.now(),
                 starting_tiles: parseInt(game.startingTiles)
             },
-            scores: Object.entries(scores).map(([player, rounds]) => ({
+            scores: Object.entries(scores).map(([player, scores]) => ({
                 player,
-                rounds,
-                total: Object.values(rounds).reduce((acc, val) => acc + val, 0)
+                color: scores.color,
+                rounds: scores.rounds,
+                total: Object.values(scores.rounds).reduce((acc, val) => acc + val, 0)
             }))
         };
 

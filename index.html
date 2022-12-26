@@ -6,6 +6,8 @@
     <meta charset="utf-8">
 
     <title>Trains Tracking</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+
     <meta name="description" content="Trains Tracking">
     <meta name="author" content="Luke Hurst">
 
@@ -16,7 +18,7 @@
     <h1>Trains</h1>
 
     <h3>Game</h3>
-    <label>
+    <label for="input-starting-tiles">
         Starting Tiles
     </label>
     <input id="input-starting-tiles" type="number">
@@ -27,19 +29,19 @@
         <thead>
             <tr>
                 <td style="min-width: 90px"></td>
-                <td>12</td>
-                <td>11</td>
-                <td>10</td>
-                <td>9</td>
-                <td>8</td>
-                <td>7</td>
-                <td>6</td>
-                <td>5</td>
-                <td>4</td>
-                <td>3</td>
-                <td>2</td>
-                <td>1</td>
-                <td>0</td>
+                <td class="tile-heading"><img class="tile-image" src="assets/double-12.jpg" alt="double-12" height="32px"></td>
+                <td class="tile-heading"><img class="tile-image" src="assets/double-11.jpg" alt="double-11" height="32px"></td>
+                <td class="tile-heading"><img class="tile-image" src="assets/double-10.jpg" alt="double-10" height="32px"></td>
+                <td class="tile-heading"><img class="tile-image" src="assets/double-9.jpg" alt="double-9" height="32px"></td>
+                <td class="tile-heading"><img class="tile-image" src="assets/double-8.jpg" alt="double-8" height="32px"></td>
+                <td class="tile-heading"><img class="tile-image" src="assets/double-7.jpg" alt="double-7" height="32px"></td>
+                <td class="tile-heading"><img class="tile-image" src="assets/double-6.jpg" alt="double-6" height="32px"></td>
+                <td class="tile-heading"><img class="tile-image" src="assets/double-5.jpg" alt="double-5" height="32px"></td>
+                <td class="tile-heading"><img class="tile-image" src="assets/double-4.jpg" alt="double-4" height="32px"></td>
+                <td class="tile-heading"><img class="tile-image" src="assets/double-3.jpg" alt="double-3" height="32px"></td>
+                <td class="tile-heading"><img class="tile-image" src="assets/double-2.jpg" alt="double-2" height="32px"></td>
+                <td class="tile-heading"><img class="tile-image" src="assets/double-1.jpg" alt="double-1" height="32px"></td>
+                <td class="tile-heading"><img class="tile-image" src="assets/double-0.jpg" alt="double-0" height="32px"></td>
             </tr>
         </thead>
         <tbody>
@@ -49,6 +51,7 @@
     <input id="input-add-player" type="text" placeholder="New player name">
     <select id="select-player-color">
         <option value="">- Train Color -</option>
+        <option value="red">Red</option>
         <option value="orange">Orange</option>
         <option value="yellow">Yellow</option>
         <option value="green">Green</option>

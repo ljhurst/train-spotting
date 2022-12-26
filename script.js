@@ -1,5 +1,8 @@
+/* globals Chart */
+
 (function () {
     const COLORS = {
+        red: '#df4933',
         orange: '#ff8c00',
         yellow: '#fdd949',
         green: '#008000',
@@ -21,6 +24,7 @@
             tooltips: {
                 mode: 'index',
                 intersect: false,
+                itemSort: (a, b) => a.yLabel < b.yLabel ? -1 : 1
             },
             hover: {
                 mode: 'nearest',
@@ -48,6 +52,7 @@
     window.onload = function () {
         const ctx = document.getElementById('canvas').getContext('2d');
         console.log('ctx', ctx);
+        console.log('config', config);
         window.myLine = new Chart(ctx, config);
 
         restoreInputs();
@@ -309,7 +314,7 @@
 
                 let nameObj = scores[name];
                 nameObj = nameObj || {};
-                nameScore = nameObj.rounds || {};
+                const nameScore = nameObj.rounds || {};
                 console.log('nameScore', nameScore);
 
                 nameScore[round] = score;

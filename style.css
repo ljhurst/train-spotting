@@ -14,3 +14,11 @@ input.score-input {
 .btn-remove-player {
   font-size: 12px;
 }
+
+.tile-heading {
+  text-align: center;
+}
+
+.tile-image {
+  border-radius: 5px;
+}

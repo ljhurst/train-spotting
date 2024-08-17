@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
 
@@ -8,68 +8,121 @@
     <title>Trains Tracking</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 
+    <meta charset="utf-8">
     <meta name="description" content="Trains Tracking">
     <meta name="author" content="Luke Hurst">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <link rel="stylesheet" href="style.css?v=1.0">
 </head>
 
 <body>
-    <h1>Trains</h1>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                Trains
+            </h1>
+        </div>
+    </section>
 
-    <h3>Game</h3>
-    <label for="input-starting-tiles">
-        Starting Tiles
-    </label>
-    <input id="input-starting-tiles" type="number">
+    <section class="section">
+        <h2 class="title">
+            Game
+        </h2>
 
-    <h3>Scores <button id="btn-new-game">New Game</button></h3>
+        <div class="columns">
+            <div class="column is-narrow">
+                <div class="field">
+                    <label class="label" for="input-starting-tiles">
+                        Starting Tiles
+                    </label>
+                    <div class="control">
+                        <input id="input-starting-tiles" class="input" type="number">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <table>
-        <thead>
-            <tr>
-                <td style="min-width: 90px"></td>
-                <td class="tile-heading"><img class="tile-image" src="assets/double-12.jpg" alt="double-12" height="32px"></td>
-                <td class="tile-heading"><img class="tile-image" src="assets/double-11.jpg" alt="double-11" height="32px"></td>
-                <td class="tile-heading"><img class="tile-image" src="assets/double-10.jpg" alt="double-10" height="32px"></td>
-                <td class="tile-heading"><img class="tile-image" src="assets/double-9.jpg" alt="double-9" height="32px"></td>
-                <td class="tile-heading"><img class="tile-image" src="assets/double-8.jpg" alt="double-8" height="32px"></td>
-                <td class="tile-heading"><img class="tile-image" src="assets/double-7.jpg" alt="double-7" height="32px"></td>
-                <td class="tile-heading"><img class="tile-image" src="assets/double-6.jpg" alt="double-6" height="32px"></td>
-                <td class="tile-heading"><img class="tile-image" src="assets/double-5.jpg" alt="double-5" height="32px"></td>
-                <td class="tile-heading"><img class="tile-image" src="assets/double-4.jpg" alt="double-4" height="32px"></td>
-                <td class="tile-heading"><img class="tile-image" src="assets/double-3.jpg" alt="double-3" height="32px"></td>
-                <td class="tile-heading"><img class="tile-image" src="assets/double-2.jpg" alt="double-2" height="32px"></td>
-                <td class="tile-heading"><img class="tile-image" src="assets/double-1.jpg" alt="double-1" height="32px"></td>
-                <td class="tile-heading"><img class="tile-image" src="assets/double-0.jpg" alt="double-0" height="32px"></td>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <section class="section">
+        <h2 class="title">
+            Scores
+        </h2>
 
-    <input id="input-add-player" type="text" placeholder="New player name">
-    <select id="select-player-color">
-        <option value="">- Train Color -</option>
-        <option value="red">Red</option>
-        <option value="orange">Orange</option>
-        <option value="yellow">Yellow</option>
-        <option value="green">Green</option>
-        <option value="blue">Blue</option>
-        <option value="purple">Purple</option>
-        <option value="brown">Brown</option>
-        <option value="pink">Pink</option>
-        <option value="white">White</option>
-    </select>
-    <button id="btn-add-player">Add Player</button>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td style="min-width: 90px"></td>
+                        <td class="tile-heading"><img class="tile-image" src="assets/double-12.jpg" alt="double-12"></td>
+                        <td class="tile-heading"><img class="tile-image" src="assets/double-11.jpg" alt="double-11"></td>
+                        <td class="tile-heading"><img class="tile-image" src="assets/double-10.jpg" alt="double-10"></td>
+                        <td class="tile-heading"><img class="tile-image" src="assets/double-9.jpg" alt="double-9"></td>
+                        <td class="tile-heading"><img class="tile-image" src="assets/double-8.jpg" alt="double-8"></td>
+                        <td class="tile-heading"><img class="tile-image" src="assets/double-7.jpg" alt="double-7"></td>
+                        <td class="tile-heading"><img class="tile-image" src="assets/double-6.jpg" alt="double-6"></td>
+                        <td class="tile-heading"><img class="tile-image" src="assets/double-5.jpg" alt="double-5"></td>
+                        <td class="tile-heading"><img class="tile-image" src="assets/double-4.jpg" alt="double-4"></td>
+                        <td class="tile-heading"><img class="tile-image" src="assets/double-3.jpg" alt="double-3"></td>
+                        <td class="tile-heading"><img class="tile-image" src="assets/double-2.jpg" alt="double-2"></td>
+                        <td class="tile-heading"><img class="tile-image" src="assets/double-1.jpg" alt="double-1"></td>
+                        <td class="tile-heading"><img class="tile-image" src="assets/double-0.jpg" alt="double-0"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
 
-    <div id="canvas-container">
-        <canvas id="canvas" height="100"></canvas>
-    </div>
+        <div class="container">
+            <div class="columns">
+                <div class="column is-narrow">
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                            <div class="field is-grouped">
+                                <input id="input-add-player" class="input is-small" type="text" placeholder="New player name">
+                                <div class="select is-small">
+                                    <select id="select-player-color">
+                                        <option value="">- Train Color -</option>
+                                        <option value="red">Red</option>
+                                        <option value="orange">Orange</option>
+                                        <option value="yellow">Yellow</option>
+                                        <option value="green">Green</option>
+                                        <option value="blue">Blue</option>
+                                        <option value="purple">Purple</option>
+                                        <option value="brown">Brown</option>
+                                        <option value="pink">Pink</option>
+                                        <option value="white">White</option>
+                                    </select>
+                                </div>
+                                <button id="btn-add-player" class="button is-success is-small">Add Player</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div>
-        <button id="btn-download-results">Download Results</button>
-    </div>
+        <div id="canvas-container">
+            <canvas id="canvas" height="100"></canvas>
+        </div>
+
+        <section class="section">
+            <div class="container">
+                <div class="level">
+                    <div class="level-left">
+                    </div>
+                    <div class="level-right">
+                        <div class="level-item buttons">
+                            <button id="btn-download-results" class="button is-info">Download Results</button>
+                            <button id="btn-new-game" class="button is-danger">New Game</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <script src="./script.js"></script>

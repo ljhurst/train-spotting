@@ -138,22 +138,35 @@
 
     function createPlayerRowHtml(name, color) {
         return `
-                <td><span>${name}</span><img src="assets/${color}-train.jpg" height="32px"></td>
-                <td><input class="score-input" type="number" name="${name}-12"></td>
-                <td><input class="score-input" type="number" name="${name}-11"></td>
-                <td><input class="score-input" type="number" name="${name}-10"></td>
-                <td><input class="score-input" type="number" name="${name}-9"></td>
-                <td><input class="score-input" type="number" name="${name}-8"></td>
-                <td><input class="score-input" type="number" name="${name}-7"></td>
-                <td><input class="score-input" type="number" name="${name}-6"></td>
-                <td><input class="score-input" type="number" name="${name}-5"></td>
-                <td><input class="score-input" type="number" name="${name}-4"></td>
-                <td><input class="score-input" type="number" name="${name}-3"></td>
-                <td><input class="score-input" type="number" name="${name}-2"></td>
-                <td><input class="score-input" type="number" name="${name}-1"></td>
-                <td><input class="score-input" type="number" name="${name}-0"></td>
-                <td><button id="btn-remove-player-${name}" class="btn-remove-player">Remove Player</button></td>
+                <td id="row-name-${name}">${createPlayerNameAndImageHtml(name, color)}</td>
+                <td><input class="input is-small score-input" type="number" name="${name}-12"></td>
+                <td><input class="input is-small score-input" type="number" name="${name}-11"></td>
+                <td><input class="input is-small score-input" type="number" name="${name}-10"></td>
+                <td><input class="input is-small score-input" type="number" name="${name}-9"></td>
+                <td><input class="input is-small score-input" type="number" name="${name}-8"></td>
+                <td><input class="input is-small score-input" type="number" name="${name}-7"></td>
+                <td><input class="input is-small score-input" type="number" name="${name}-6"></td>
+                <td><input class="input is-small score-input" type="number" name="${name}-5"></td>
+                <td><input class="input is-small score-input" type="number" name="${name}-4"></td>
+                <td><input class="input is-small score-input" type="number" name="${name}-3"></td>
+                <td><input class="input is-small score-input" type="number" name="${name}-2"></td>
+                <td><input class="input is-small score-input" type="number" name="${name}-1"></td>
+                <td><input class="input is-small score-input" type="number" name="${name}-0"></td>
+                <td><button id="btn-remove-player-${name}" class="button is-danger is-small is-outlined">Remove Player</button></td>
             `;
+    }
+
+    function createPlayerNameAndImageHtml(name, color) {
+        return `
+            <div class="level is-mobile">
+                <div class="level-left">
+                    <div class="level-item">
+                        <span class="mr-4">${name}</span>
+                        <figure class="image is-32x32"><img class="is-rounded" src="assets/${color}-train.jpg"></figure>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     function setTabIndexes() {
@@ -283,7 +296,7 @@
     function removePlayer(name) {
         const tbody = document.getElementsByTagName('tbody')[0];
 
-        const rowIndex = [...tbody.rows].findIndex(row => row.children[0].children[0].innerHTML === name);
+        const rowIndex = [...tbody.rows].findIndex(row => row.children[0].id.includes(name));
         tbody.deleteRow(rowIndex);
 
         const dataSetIndex = config.data.datasets.findIndex(dataset => dataset.label === name);

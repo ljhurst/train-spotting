@@ -16,7 +16,7 @@
     const config = {
         type: 'line',
         data: {
-            labels: [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+            labels: ['Start', 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
             datasets: []
         },
         options: {
@@ -79,8 +79,13 @@
 
             const inputs = getScoreInputs();
             const nameInputs = inputs.filter(input => input.name.split('-')[0] === name);
+            console.log('nameInputs', nameInputs);
 
             Object.entries(score.rounds).forEach(([round, score]) => {
+                if (round > 12) {
+                    return;
+                }
+
                 const roundInput = nameInputs.filter(input => input.name.split('-')[1] === round)[0];
 
                 roundInput.value = score;
@@ -92,6 +97,7 @@
                 if (dataset.label === name) {
                     const orderedRoundScores = Object.entries(score.rounds).sort((a, b) => parseInt(b[0]) - parseInt(a[0])).map(a => a[1]);
                     const roundSums = cumSums(orderedRoundScores);
+                    console.log('roundSums', roundSums);
 
                     dataset.data = roundSums;
                 }
@@ -129,7 +135,7 @@
         config.data.datasets.push({
             backgroundColor: color,
             borderColor: color,
-            data: [],
+            data: [0],
             fill: false,
             label: name,
             lineTension: 0
@@ -282,7 +288,9 @@
         if (!scores[name]) {
             scores[name] = {
                 color: color,
-                rounds: {}
+                rounds: {
+                    13: 0,
+                },
             };
         }
 

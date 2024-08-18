@@ -27,3 +27,4 @@ Find the `lj-train-spotting` bucket
 - Native JavaScript
 - HTML
 - Styling via [Bulma](https://bulma.io/)
+- Charts by [Chart.js](https://www.chartjs.org/)

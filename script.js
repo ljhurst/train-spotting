@@ -43,7 +43,10 @@
                     scaleLabel: {
                         display: false,
                         labelString: 'Value'
-                    }
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                    },
                 }]
             }
         }
@@ -158,7 +161,7 @@
                 <td><input class="input is-small score-input" type="number" name="${name}-2"></td>
                 <td><input class="input is-small score-input" type="number" name="${name}-1"></td>
                 <td><input class="input is-small score-input" type="number" name="${name}-0"></td>
-                <td><button id="btn-remove-player-${name}" class="button is-danger is-small is-outlined">Remove Player</button></td>
+                <td><button id="btn-remove-player-${name}" class="button is-danger is-small is-outlined">X</button></td>
             `;
     }
 

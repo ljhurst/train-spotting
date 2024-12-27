@@ -9,7 +9,7 @@ http://lj-train-spotting.s3-website-us-east-1.amazonaws.com/
 
 ## Log in to AWS
 
-Go to [AWS](aws.com) and log in with root user email
+Go to [AWS](https://aws.com) and log in with root user email
 
 ## Go to S3
 

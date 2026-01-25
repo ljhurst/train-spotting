@@ -78,12 +78,12 @@ terraform validate
 
 ### Frontend
 
-Upload the these files from the `frontend/` directory to the S3 bucket
+Upload these files from the `frontend/` directory to the S3 bucket
 
 - `assets/`
 - `index.html`
 - `script.js`
-- `styles.css`
+- `style.css`
 
 ## Development
 

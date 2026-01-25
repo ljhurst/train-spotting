@@ -85,6 +85,23 @@ Upload the these files from the `frontend/` directory to the S3 bucket
 - `script.js`
 - `styles.css`
 
+## Development
+
+### Code Conventions
+
+Code conventions are enforced via [pre-commit](https://pre-commit.com/).
+To install the git hooks run:
+
+```bash
+pre-commit install
+```
+
+Then make sure everything is working with
+
+```bash
+pre-commit run --all-files
+```
+
 ## Tech Stack
 
 - Vanilla JavaScript

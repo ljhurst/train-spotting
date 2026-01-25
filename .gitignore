@@ -1,1 +1,8 @@
+# Vim
 .swp
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+*.tfvars
+.terraform/

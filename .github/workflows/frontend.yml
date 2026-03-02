@@ -27,4 +27,4 @@ jobs:
           aws s3 cp frontend/index.html s3://lj-train-spotting/index.html
           aws s3 cp frontend/script.js s3://lj-train-spotting/script.js
           aws s3 cp frontend/style.css s3://lj-train-spotting/style.css
-          aws s3 sync frontend/assets/ s3://lj-bracket-clash/assets/ --delete
+          aws s3 sync frontend/assets/ s3://lj-train-spotting/assets/ --delete

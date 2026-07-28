@@ -28,23 +28,22 @@ For manual deployments (useful for local testing), see the sections below.
 
 ### Authentication
 
-A `train-spotting-deploy-user` is available to manage the infrastructure and deploy
-the code. If you don't have credentials you'll have to go to the console to create
-new ones.
-
-Save the credentials in `~/.aws/credentials` under a `[train-spotting]` profile:
-
-```ini
-[train-spotting]
-aws_access_key_id = <access-key-id>
-aws_secret_access_key = <secret-access-key>
-```
-
-And then export the profile for use with Terraform and AWS CLI:
+Local access uses AWS IAM Identity Center (SSO) rather than static access
+keys. One-time setup:
 
 ```bash
-export AWS_PROFILE=train-spotting
+aws configure sso --profile train-spotting-deploy
 ```
+
+Then, whenever you need to run Terraform or the AWS CLI:
+
+```bash
+aws sso login --profile train-spotting-deploy
+export AWS_PROFILE=train-spotting-deploy
+```
+
+GitHub Actions deploys use OIDC federation (no stored AWS credentials); the
+`Frontend` workflow can also be triggered manually from the Actions tab.
 
 ### Infrastructure
 

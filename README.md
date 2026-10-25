@@ -1,6 +1,7 @@
 # train-spotting
 
-[![Frontend](https://github.com/ljhurst/train-spotting/actions/workflows/frontend.yml/badge.svg)](https://github.com/ljhurst/train-spotting/actions/workflows/frontend.yml)
+[![Deploy](https://github.com/ljhurst/train-spotting/actions/workflows/deploy.yml/badge.svg)](https://github.com/ljhurst/train-spotting/actions/workflows/deploy.yml)
+[![Check](https://github.com/ljhurst/train-spotting/actions/workflows/check.yml/badge.svg)](https://github.com/ljhurst/train-spotting/actions/workflows/check.yml)
 
 ## Website
 
@@ -18,71 +19,31 @@
 
 ## Deployment
 
-### Automatic Deployment
+Merging to `main` deploys both the infrastructure (`infra/`) and the site
+(`frontend/`, synced to the bucket root with `--delete`) through
+[stych](https://github.com/ljhurst/stych)'s shared workflows. GitHub Actions
+authenticates with OIDC; no AWS credentials are stored in the repo.
 
-Deployments are automated via GitHub Actions:
+Every pull request to `main` gets a comment with the Terraform plan and a
+preview of the site sync (uploads and deletes), so review those before
+merging. Applies run in the `prod` environment, which only `main` can deploy
+to.
 
-- **Push to main**: Automatically deploy the frontend to S3
+### Break-glass local deploys
 
-For manual deployments (useful for local testing), see the sections below.
-
-### Authentication
-
-Local access uses AWS IAM Identity Center (SSO) rather than static access
-keys. One-time setup:
-
-```bash
-aws configure sso --profile train-spotting-deploy
-```
-
-Then, whenever you need to run Terraform or the AWS CLI:
+Deploy locally only when CI can't. Local access uses AWS IAM Identity Center
+(SSO) through the `train-spotting-deploy` profile:
 
 ```bash
+aws configure sso --profile train-spotting-deploy  # one-time setup
 aws sso login --profile train-spotting-deploy
 export AWS_PROFILE=train-spotting-deploy
+
+terraform -chdir=infra init
+terraform -chdir=infra plan
+terraform -chdir=infra apply
+aws s3 sync frontend/ s3://lj-train-spotting/ --delete
 ```
-
-GitHub Actions deploys use OIDC federation (no stored AWS credentials); the
-`Frontend` workflow can also be triggered manually from the Actions tab.
-
-### Infrastructure
-
-Infrastructure is managed by [Terraform](https://www.terraform.io/).
-
-Go to `infra/` and initialize Terraform:
-
-```bash
-cd infra/
-terraform init
-```
-
-Review the planned changes:
-
-```bash
-terraform plan
-```
-
-Apply the changes:
-
-```bash
-terraform apply
-```
-
-When making changes to the infrastructure be sure to format and validate:
-
-```bash
-terraform fmt
-terraform validate
-```
-
-### Frontend
-
-Upload these files from the `frontend/` directory to the S3 bucket
-
-- `assets/`
-- `index.html`
-- `script.js`
-- `style.css`
 
 ## Development
 

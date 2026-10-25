@@ -5,4 +5,6 @@
 *.tfstate
 *.tfstate.backup
 *.tfvars
+!infra/terraform.tfvars
+*.tfplan
 .terraform/

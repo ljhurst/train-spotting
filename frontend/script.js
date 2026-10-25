@@ -1,6 +1,6 @@
 /* globals Chart */
 
-(function () {
+(() => {
   const COLORS = {
     red: '#df4933',
     orange: '#ff8c00',
@@ -56,7 +56,7 @@
     },
   };
 
-  window.onload = function () {
+  window.onload = () => {
     const ctx = document.getElementById('canvas').getContext('2d');
     console.log('ctx', ctx);
     console.log('config', config);
@@ -107,7 +107,7 @@
       config.data.datasets.forEach((dataset) => {
         if (dataset.label === name) {
           const orderedRoundScores = Object.entries(score.rounds)
-            .sort((a, b) => parseInt(b[0]) - parseInt(a[0]))
+            .sort((a, b) => parseInt(b[0], 10) - parseInt(a[0], 10))
             .map((a) => a[1]);
           const roundSums = cumSums(orderedRoundScores);
           console.log('roundSums', roundSums);
@@ -223,7 +223,7 @@
     .addEventListener('change', (e) => {
       console.log('input-starting-tiles change');
 
-      let game = getGame();
+      const game = getGame();
       game.startingTiles = e.target.value;
 
       saveGame(game);
@@ -232,7 +232,7 @@
   document.getElementById('btn-new-game').addEventListener('click', () => {
     console.log('btn-new-game click');
 
-    let scores = getScores();
+    const scores = getScores();
 
     Object.keys(scores).forEach((name) => {
       scores[name].rounds = {};
@@ -303,7 +303,7 @@
 
     addPlayerDataset(name, color);
 
-    let scores = getScores();
+    const scores = getScores();
 
     if (!scores[name]) {
       scores[name] = {
@@ -334,7 +334,7 @@
     );
     config.data.datasets.splice(dataSetIndex, 1);
 
-    let scores = getScores();
+    const scores = getScores();
 
     if (scores[name]) {
       delete scores[name];
@@ -349,12 +349,12 @@
 
   function addScoreInputEventListeners(inputs) {
     inputs.forEach((element) => {
-      element.addEventListener('change', function (e) {
+      element.addEventListener('change', (e) => {
         console.log('e', e);
         const [name, round] = e.target.name.split('-');
-        const score = parseInt(e.target.value);
+        const score = parseInt(e.target.value, 10);
 
-        let scores = getScores();
+        const scores = getScores();
         console.log('scores', scores);
 
         let nameObj = scores[name];
@@ -372,7 +372,7 @@
           console.log('dataset', dataset);
           if (dataset.label === name) {
             const orderedRoundScores = Object.entries(nameScore)
-              .sort((a, b) => parseInt(b[0]) - parseInt(a[0]))
+              .sort((a, b) => parseInt(b[0], 10) - parseInt(a[0], 10))
               .map((a) => a[1]);
             const roundSums = cumSums(orderedRoundScores);
 
@@ -413,7 +413,7 @@
     const results = {
       game: {
         downloaded_at: Date.now(),
-        starting_tiles: parseInt(game.startingTiles),
+        starting_tiles: parseInt(game.startingTiles, 10),
       },
       scores: Object.entries(scores).map(([player, scores]) => ({
         player,

@@ -18,7 +18,6 @@ jobs:
     uses: ljhurst/stych/.github/workflows/terraform.yml@v1
     with:
       plan-role-arn: arn:aws:iam::755958650241:role/stych/train-spotting-ci-plan
-      # yamllint disable-line rule:line-length
       apply-role-arn: arn:aws:iam::755958650241:role/stych/train-spotting-ci-apply
 
   site:
@@ -26,7 +25,6 @@ jobs:
     uses: ljhurst/stych/.github/workflows/static-site.yml@v1
     with:
       plan-role-arn: arn:aws:iam::755958650241:role/stych/train-spotting-ci-plan
-      # yamllint disable-line rule:line-length
       apply-role-arn: arn:aws:iam::755958650241:role/stych/train-spotting-ci-apply
       bucket: lj-train-spotting
       site-dir: frontend

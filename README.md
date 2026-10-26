@@ -5,7 +5,9 @@
 
 ## Website
 
-<http://lj-train-spotting.s3-website-us-east-1.amazonaws.com>
+<https://train-spotting.bylukehurst.com>
+
+Served over HTTPS through CloudFront from a private S3 bucket.
 
 ## Tour
 

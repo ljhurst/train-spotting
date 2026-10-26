@@ -10,6 +10,7 @@ updates:
     groups:
       monthly-batch:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
       security:
         applies-to: security-updates
         patterns: ["*"]
@@ -23,6 +24,7 @@ updates:
     groups:
       monthly-batch:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
       security:
         applies-to: security-updates
         patterns: ["*"]

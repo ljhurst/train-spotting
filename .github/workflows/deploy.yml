@@ -33,4 +33,5 @@ jobs:
       plan-role-arn: arn:aws:iam::755958650241:role/stych/train-spotting-ci-plan
       apply-role-arn: arn:aws:iam::755958650241:role/stych/train-spotting-ci-apply
       bucket: lj-train-spotting
+      distribution-id: E2JFEM4KUTQ1SH
       site-dir: frontend

@@ -3,7 +3,7 @@ locals {
 }
 
 module "site" {
-  source = "git::https://github.com/ljhurst/stych.git//infra/modules/static-site?ref=v1.4.0"
+  source = "git::https://github.com/ljhurst/stych.git//infra/modules/static-site?ref=v1.5.0"
 
   bucket_name             = "lj-train-spotting"
   domain_name             = local.site_domain
